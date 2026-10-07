@@ -9,3 +9,6 @@ pella_*.png
 signup_*.png
 signup_*.html
 tempmail_state.*
+dump_pella.py
+signup_auto.py
+test.py

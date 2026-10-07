@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: CHANGE_ME
+      POSTGRES_DB: selfhost
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports: ["5432:5432"]
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    ports: ["6379:6379"]
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on: [postgres, redis]
+    env_file: .env
+    ports: ["8000:8000"]
+    volumes:
+      - ./storage:/var/lib/selfhost/storage
+    # Playwright's Chromium needs shm; raise it or use --disable-dev-shm-usage
+    shm_size: "1gb"
+
+volumes:
+  pgdata:
+  redisdata:

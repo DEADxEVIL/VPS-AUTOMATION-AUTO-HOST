@@ -1,0 +1,13 @@
+.env
+storage/
+.venv/
+__pycache__/
+*.pyc
+pella_cookies.json
+pella_*.html
+pella_*.png
+signup_*.png
+signup_*.html
+tempmail_state.*
+*.log
+.git/
